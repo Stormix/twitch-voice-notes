@@ -1,0 +1,61 @@
+name: Build And Upload Extension Zip Via Artifact
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+      - uses: pnpm/action-setup@v2
+      - run: pnpm install --frozen-lockfile
+      - id: release
+        run: |
+            git config user.name "Anas Mazouni (via GitHub Actions)"
+            git config user.email "madadj4@gmail.com"
+            git remote set-url origin "https://$GITHUB_ACTOR:$GH_TOKEN@github.com/$GITHUB_REPOSITORY.git"
+            pnpm release
+            git push --follow-tags
+            VERSION=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
+            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+      - name: Build
+        run: pnpm build
+        env:
+          VERSION: "${{ steps.release.outputs.VERSION }}"
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*
+          name: dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip
+      - name: Zip dist folder
+        run: |
+          mkdir artifacts
+          zip -r artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip dist
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "artifacts/*.zip"
+          tag: ${{ steps.release.outputs.VERSION }}
+      # - name: Upload & release
+      #   uses: mnao305/chrome-extension-upload@v4.0.1
+      #   with:
+      #     file-path: artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip
+      #     extension-id: "oebhalkjebodiplmknemmkdihmbalhdi"
+      #     client-id: ${{ secrets.CLIENT_ID }}
+      #     client-secret: ${{ secrets.CLIENT_SECRET }}
+      #     refresh-token: ${{ secrets.REFRESH_TOKEN }}
