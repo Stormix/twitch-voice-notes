@@ -51,11 +51,11 @@ jobs:
         with:
           artifacts: "artifacts/*.zip"
           tag: ${{ steps.release.outputs.VERSION }}
-      # - name: Upload & release
-      #   uses: mnao305/chrome-extension-upload@v4.0.1
-      #   with:
-      #     file-path: artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip
-      #     extension-id: "oebhalkjebodiplmknemmkdihmbalhdi"
-      #     client-id: ${{ secrets.CLIENT_ID }}
-      #     client-secret: ${{ secrets.CLIENT_SECRET }}
-      #     refresh-token: ${{ secrets.REFRESH_TOKEN }}
+      - name: Upload & release
+        uses: mnao305/chrome-extension-upload@v4.0.1
+        with:
+          file-path: artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip
+          extension-id: "oebhalkjebodiplmknemmkdihmbalhdi"
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}

@@ -7,13 +7,14 @@ import { Payload } from './type';
 class App {
   readonly logger = new Logger('Background');
   ws = new WebSocket(BACKEND_WS);
-  constructor() {}
+  open = false;
 
   init() {
     this.logger.info('App init');
 
     this.ws.onopen = () => {
       this.logger.info('WebSocket connected');
+      this.open = true;
     };
 
     this.ws.onmessage = event => {

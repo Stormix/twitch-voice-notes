@@ -9,7 +9,7 @@ const manifest = {
   name: 'Dwi - Twitch voice notes',
   version: packageJson.version,
   description: packageJson.description,
-  permissions: ['storage'],
+  permissions: ['storage', 'identity'],
   background: {
     service_worker: 'src/pages/background/index.js',
     type: 'module',
