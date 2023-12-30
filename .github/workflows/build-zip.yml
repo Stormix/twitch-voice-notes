@@ -46,7 +46,7 @@ jobs:
       - name: Zip dist folder
         run: |
           mkdir artifacts
-          zip -r artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip dist
+          cd dist && zip -r ../artifacts/dwi-voice-notes-${{ steps.release.outputs.VERSION }}.zip . && cd ..
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "artifacts/*.zip"
