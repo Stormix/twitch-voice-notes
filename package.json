@@ -1,6 +1,6 @@
 {
   "name": "dwi-voice-notes",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A browser extension that allows you to record voice notes and send them to your friends on Twitch.",
   "license": "MIT",
   "repository": {
