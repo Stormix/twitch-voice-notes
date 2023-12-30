@@ -12,7 +12,7 @@ interface MessageProps {
 
 const Message = ({ voiceNote }: MessageProps) => {
   const pathname = window.location.href;
-  const results = /https:\/\/www\.twitch\.tv\/([a-zA-Z0-9_]+)/gi.exec(pathname);
+  const results = /https:\/\/www\.twitch\.tv\/(?:popout\/)?([a-zA-Z0-9_]+)/gi.exec(pathname);
   const channel = results ? results[1] : null;
 
   const formattedTime = format(new Date(voiceNote.createdAt), 'hh:mm a');

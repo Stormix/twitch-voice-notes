@@ -11,26 +11,22 @@ const logger = new Logger('VoiceMessage');
 const createContainer = () => {
   const root = document.createElement('div');
   const shadowRoot = root.attachShadow({ mode: 'open' });
-
   const rootIntoShadow = document.createElement('div');
   rootIntoShadow.id = 'shadow-root';
-
   shadowRoot.appendChild(rootIntoShadow);
-
   const styleElement = document.createElement('style');
   styleElement.innerHTML = injectedStyle;
   shadowRoot.appendChild(styleElement);
-
   return { root, rootIntoShadow };
 };
 
 const injectMessage = (voiceNote: VoiceNote) => {
+  logger.info(`Received a voice note from ${voiceNote.author}, injecting...`);
+
   const normalContainer = document.querySelector('[data-test-selector="chat-scrollable-area__message-container"]');
   const seventTvContainer = document.querySelector('main[class=seventv-chat-list]');
   const chatContainer = normalContainer || seventTvContainer;
 
-  logger.info('Checking for chat container: ', chatContainer ? 'found' : 'not found');
-  console.log('chatContainer', chatContainer);
   if (!chatContainer) logger.error('Chat container not found', 'error');
   const { root, rootIntoShadow } = createContainer();
 
