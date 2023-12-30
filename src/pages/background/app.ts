@@ -4,6 +4,14 @@ import userStorage from '@root/src/shared/storages/userStorage';
 import { auth } from './auth';
 import { Payload } from './type';
 
+const parseIfNotParsed = (data: string) => {
+  try {
+    return JSON.parse(data);
+  } catch (error) {
+    return data;
+  }
+};
+
 class App {
   readonly logger = new Logger('Background');
   ws = new WebSocket(BACKEND_WS);
@@ -19,7 +27,8 @@ class App {
 
     this.ws.onmessage = event => {
       this.logger.info('WebSocket message received', event.data);
-      const message = JSON.parse(JSON.parse(event.data)) as Payload<unknown>;
+      const message = parseIfNotParsed(parseIfNotParsed(event.data)) as Payload<unknown>;
+
       switch (message.type) {
         case 'voice-note':
           chrome.tabs.query({ active: true }, tabs => {

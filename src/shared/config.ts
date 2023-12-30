@@ -4,3 +4,4 @@ export const BACKEND_WS = 'wss://twitch-voice-notes.lab.stormix.dev/ws';
 // export const BACKEND_WS = 'ws://localhost:6969/ws'; // "wss://twitch-voice-notes.lab.stormix.dev/ws"
 export const TWITCH_CLIENT_ID = '1n58hzg5bu9hrfuz3mz4b0v2dfmk92';
 export const EXTENSION_ID = 'oebhalkjebodiplmknemmkdihmbalhdi';
+export const CHANNEL_NAME_REGEX = 'https://www.twitch.tv/(?:popout/)?([a-zA-Z0-9_]+)';

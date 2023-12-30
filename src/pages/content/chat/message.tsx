@@ -1,7 +1,9 @@
-import { BACKEND_URL } from '@root/src/shared/config';
+import { BACKEND_URL, CHANNEL_NAME_REGEX } from '@root/src/shared/config';
 import useAudioPlayer from '@root/src/shared/hooks/useAudioPlayer';
+import { useLocation } from '@root/src/shared/hooks/useLocation';
 import { cn } from '@root/src/shared/utils';
 import { format } from 'date-fns';
+import { useCallback, useMemo } from 'react';
 import { FaPause, FaPlay } from 'react-icons/fa';
 import { VoiceNote as IVoiceNote } from '../../background/type';
 import Progress from './progress';
@@ -11,16 +13,19 @@ interface MessageProps {
 }
 
 const Message = ({ voiceNote }: MessageProps) => {
-  const pathname = window.location.href;
-  const results = /https:\/\/www\.twitch\.tv\/(?:popout\/)?([a-zA-Z0-9_]+)/gi.exec(pathname);
-  const channel = results ? results[1] : null;
+  const { href } = useLocation();
 
-  const formattedTime = format(new Date(voiceNote.createdAt), 'hh:mm a');
-  const formatDuration = (duration: number) => {
+  const channel = useMemo(() => {
+    return new RegExp(CHANNEL_NAME_REGEX, 'gi').exec(href)?.[1];
+  }, [href]);
+
+  const formattedTime = useMemo(() => format(new Date(voiceNote.createdAt), 'hh:mm a'), [voiceNote.createdAt]);
+
+  const formatDuration = useCallback((duration: number) => {
     const minutes = Math.floor(duration / 60);
     const seconds = Math.floor(duration % 60);
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
+  }, []);
 
   const { status, play, pause, handleSeek, duration, currentTime } = useAudioPlayer({
     url: `${BACKEND_URL}/audio?id=${voiceNote.id}`,
