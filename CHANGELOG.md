@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.0.10 (2023-12-30)
+
+
+### Bug Fixes
+
+* support displaying messages on popout chat ([06e998f](https://github.com/Stormix/twitch-voice-notes/commit/06e998f896aeaae9e09db93109f53fa214cd63ce))
+
 ### 0.0.9 (2023-12-30)
 
 ### 0.0.8 (2023-12-30)
