@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.3 (2023-12-31)
+
+
+### Features
+
+* introduce server side user check ([b74358a](https://github.com/Stormix/twitch-voice-notes/commit/b74358a97c4e484e8c0b401df49e9db7a541ed07))
+
 ### 0.1.2 (2023-12-31)
 
 
