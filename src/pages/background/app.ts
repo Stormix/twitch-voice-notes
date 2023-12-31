@@ -42,6 +42,9 @@ class App {
             }
           });
           break;
+        case 'heartbeat':
+          // Do nothing
+          break;
         default:
           this.logger.warn('Unknown message received', JSON.stringify(message));
       }

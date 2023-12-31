@@ -3,6 +3,7 @@ import useStorage from '@root/src/shared/hooks/useStorage';
 import userStorage from '@root/src/shared/storages/userStorage';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import withSuspense from '@src/shared/hoc/withSuspense';
+import { FaTwitch } from 'react-icons/fa';
 
 const Popup = () => {
   const { user } = useStorage(userStorage);
@@ -17,7 +18,12 @@ const Popup = () => {
           </button>
         </div>
       ) : (
-        <button onClick={() => chrome.runtime.sendMessage({ type: 'login' })}>Login</button>
+        <button
+          className="bg-twitch px-4 py-2 hover:bg-twitch-dark focus:bg-twitch-dark rounded my-auto"
+          onClick={() => chrome.runtime.sendMessage({ type: 'login' })}>
+          <FaTwitch className="inline-block mr-2" />
+          Login with Twitch
+        </button>
       )}
     </div>
   );
