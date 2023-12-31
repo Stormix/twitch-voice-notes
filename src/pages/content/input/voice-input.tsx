@@ -34,7 +34,7 @@ const VoiceInput = () => {
   const { getReferenceProps, getFloatingProps } = useInteractions([hover]);
 
   const [recordedAudio, setRecordedAudio] = useState<Blob | null>(null);
-  const { user } = useStorage(userStorage);
+  const { user, access_token } = useStorage(userStorage);
 
   const { startRecording, stopRecording, status } = useReactMediaRecorder({
     audio: true,
@@ -72,6 +72,9 @@ const VoiceInput = () => {
         await fetch(`${BACKEND_URL}/record`, {
           method: 'POST',
           body: formData,
+          headers: {
+            Authorization: `Bearer ${btoa(user.login + ':' + access_token)}`,
+          },
         });
       } catch (e) {
         // Fail silently
