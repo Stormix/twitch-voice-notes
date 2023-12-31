@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.1 (2023-12-31)
+
+
+### Features
+
+* better login button ([3407021](https://github.com/Stormix/twitch-voice-notes/commit/3407021aba0b4737c7d62d1d1f8b70be8db48a82))
+
 ### 0.0.11 (2023-12-30)
 
 ### 0.0.10 (2023-12-30)
