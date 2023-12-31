@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.2 (2023-12-31)
+
+
+### Bug Fixes
+
+* use correct backend ([dc9dbfe](https://github.com/Stormix/twitch-voice-notes/commit/dc9dbfe568abd372921fad7e16e660eb9e79d4a0))
+
 ### 0.1.1 (2023-12-31)
 
 
