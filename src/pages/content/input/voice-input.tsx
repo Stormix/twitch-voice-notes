@@ -37,7 +37,7 @@ const VoiceInput = () => {
   const { user, access_token } = useStorage(userStorage);
 
   const { startRecording, stopRecording, status } = useReactMediaRecorder({
-    audio: true,
+    audio: { noiseSuppression: false, echoCancellation: false },
     onStop: (_, blob) => setRecordedAudio(blob),
   });
 

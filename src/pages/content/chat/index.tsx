@@ -11,12 +11,15 @@ const logger = new Logger('VoiceMessage');
 const createContainer = () => {
   const root = document.createElement('div');
   const shadowRoot = root.attachShadow({ mode: 'open' });
+
   const rootIntoShadow = document.createElement('div');
   rootIntoShadow.id = 'shadow-root';
   shadowRoot.appendChild(rootIntoShadow);
+
   const styleElement = document.createElement('style');
   styleElement.innerHTML = injectedStyle;
   shadowRoot.appendChild(styleElement);
+
   return { root, rootIntoShadow };
 };
 
@@ -49,12 +52,3 @@ chrome.runtime.onMessage.addListener(message => {
 
   return true;
 });
-
-/**
- * https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/174
- *
- * In the firefox environment, the adoptedStyleSheets bug may prevent contentStyle from being applied properly.
- * Please refer to the PR link above and go back to the contentStyle.css implementation, or raise a PR if you have a better way to improve it.
- */
-
-// createRoot(root).render(<ChatMessage />);

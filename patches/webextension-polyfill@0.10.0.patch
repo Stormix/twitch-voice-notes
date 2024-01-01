@@ -1,0 +1,37 @@
+diff --git a/dist/browser-polyfill.js b/dist/browser-polyfill.js
+index 8e732a2572e8c4f6de30e7f62e83d0761bd734c2..10ecc77b1e7debd3c27125e42f93139c5357b506 100644
+--- a/dist/browser-polyfill.js
++++ b/dist/browser-polyfill.js
+@@ -27,7 +27,10 @@
+   }
+ 
+   if (typeof globalThis.browser === "undefined" || Object.getPrototypeOf(globalThis.browser) !== Object.prototype) {
+-    const CHROME_SEND_MESSAGE_CALLBACK_NO_RESPONSE_MESSAGE = "The message port closed before a response was received."; // Wrapping the bulk of this polyfill in a one-time-use function is a minor
++    // Wrapping the bulk of this polyfill in a one-time-use function is a minor
++    const CHROME_SEND_MESSAGE_CALLBACK_NO_LISTENER_MESSAGE = "The message port closed before a response was received.";
++    const CHROME_SEND_MESSAGE_CALLBACK_NO_RESPONSE_MESSAGE = "A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received"; // No period
++    
+     // optimization for Firefox. Since Spidermonkey does not fully parse the
+     // contents of a function until the first time it's called, and since it will
+     // never actually need to be called, this allows the polyfill to be included
+@@ -1177,7 +1180,13 @@
+           // Detect when none of the listeners replied to the sendMessage call and resolve
+           // the promise to undefined as in Firefox.
+           // See https://github.com/mozilla/webextension-polyfill/issues/130
+-          if (extensionAPIs.runtime.lastError.message === CHROME_SEND_MESSAGE_CALLBACK_NO_RESPONSE_MESSAGE) {
++          // if (extensionAPIs.runtime.lastError.message === CHROME_SEND_MESSAGE_CALLBACK_NO_RESPONSE_MESSAGE) {
++          
++          // See https://github.com/mozilla/webextension-polyfill/issues/384
++          if (
++            extensionAPIs.runtime.lastError.message === CHROME_SEND_MESSAGE_CALLBACK_NO_RESPONSE_MESSAGE ||
++            extensionAPIs.runtime.lastError.message === CHROME_SEND_MESSAGE_CALLBACK_NO_LISTENER_MESSAGE
++          ) {
+             resolve();
+           } else {
+             reject(new Error(extensionAPIs.runtime.lastError.message));
+diff --git a/dist/browser-polyfill.min.js b/dist/browser-polyfill.min.js
+deleted file mode 100644
+index 37f6ee9ccb7189852ea30b7092a0f95920800136..0000000000000000000000000000000000000000
+diff --git a/dist/browser-polyfill.min.js.map b/dist/browser-polyfill.min.js.map
+deleted file mode 100644
+index ffae0728723d6754156c1022c4274df90e6c5d1a..0000000000000000000000000000000000000000

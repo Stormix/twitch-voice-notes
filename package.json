@@ -29,6 +29,7 @@
     "@floating-ui/react": "^0.26.4",
     "@headlessui/react": "^1.7.17",
     "@radix-ui/colors": "^3.0.0",
+    "@sentry/browser": "^7.91.0",
     "clsx": "^2.0.0",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "^3.0.6",
@@ -38,6 +39,7 @@
     "react-icons": "^4.12.0",
     "react-media-recorder": "^1.6.6",
     "tailwind-merge": "^2.2.0",
+    "wavesurfer.js": "^7.6.0",
     "webextension-polyfill": "0.10.0",
     "zod": "^3.22.4"
   },
@@ -89,5 +91,10 @@
       "eslint --fix"
     ]
   },
-  "packageManager": "pnpm@8.9.2"
+  "packageManager": "pnpm@8.9.2",
+  "pnpm": {
+    "patchedDependencies": {
+      "webextension-polyfill@0.10.0": "patches/webextension-polyfill@0.10.0.patch"
+    }
+  }
 }

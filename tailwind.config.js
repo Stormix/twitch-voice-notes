@@ -11,7 +11,7 @@ export default {
       colors: {
         muted: '#939393',
         twitch: {
-          black: '18181B',
+          black: '#18181B',
           grey: '#636363',
           light: '#EEE2FF',
           dark: '#451093',

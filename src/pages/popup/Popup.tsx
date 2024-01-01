@@ -1,4 +1,3 @@
-import '@pages/popup/Popup.css';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import userStorage from '@root/src/shared/storages/userStorage';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';

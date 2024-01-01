@@ -6,6 +6,7 @@ import injectedStyle from './injected.css?inline';
 
 refreshOnUpdate('pages/content');
 
+let interval = undefined;
 const logger = new Logger('VoiceInput');
 
 const injectVoiceInput = () => {
@@ -43,22 +44,33 @@ const injectVoiceInput = () => {
   styleElement.innerHTML = injectedStyle;
   shadowRoot.appendChild(styleElement);
 
-  /**
-   * https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite/pull/174
-   *
-   * In the firefox environment, the adoptedStyleSheets bug may prevent contentStyle from being applied properly.
-   * Please refer to the PR link above and go back to the contentStyle.css implementation, or raise a PR if you have a better way to improve it.
-   */
-
   createRoot(rootIntoShadow).render(<VoiceInput />);
 };
 
-injectVoiceInput();
+const registerInjector = () => {
+  logger.info('Registering injector');
 
-let interval = undefined;
-
-interval = setInterval(() => {
-  logger.info('Checking for voice input: ', document.querySelector('#voice-input') ? 'found' : 'not found');
-  if (interval && document.querySelector('#voice-input')) clearInterval(interval);
   injectVoiceInput();
-}, 5_000);
+
+  interval = setInterval(() => {
+    logger.info('Checking for voice input: ', document.querySelector('#voice-input') ? 'found' : 'not found');
+    if (interval && document.querySelector('#voice-input')) clearInterval(interval);
+    injectVoiceInput();
+  }, 5_000);
+};
+
+const currentUrl = new URL(window.location.href);
+
+// Watch for url changes
+const observer = new MutationObserver(() => {
+  const newUrl = new URL(window.location.href);
+  if (currentUrl.pathname !== newUrl.pathname) {
+    logger.info('Url changed, re-registering injector');
+    currentUrl.pathname = newUrl.pathname;
+    registerInjector();
+  }
+});
+
+observer.observe(document.querySelector('body')!, { childList: true, subtree: true });
+
+registerInjector();
