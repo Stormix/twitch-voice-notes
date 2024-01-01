@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 0.1.5 (2024-01-01)
+
+
+### Features
+
+* better sound quality + waveform and remount on history change ([1cd4dca](https://github.com/Stormix/twitch-voice-notes/commit/1cd4dca0c8ffd74a381671dea68a4fd4d6d2518c))
+
 ### 0.1.4 (2023-12-31)
 
 
